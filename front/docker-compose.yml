@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   front:
     build:
@@ -6,12 +8,11 @@ services:
       # Only will build development stage from our dockerfile
       #target: development
     volumes:
-      - .:/usr/src/app
-    # Run in dev Mode: npm run start:dev
+      - front:/usr/src/app
+    #Run in dev Mode: npm run start:dev  // start:dev ?
     command: npm run dev
     ports:
       - 5173:5173
-    
-    
+
 volumes:
   front:

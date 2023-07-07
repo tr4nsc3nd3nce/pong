@@ -14,8 +14,9 @@ function Header() {
         p-4 flex justify-between items-center bg-[#2C3E50]">
 
             <div className="flex items-center space-x-4">
-                <HeaderButton url={'/'} label={'Home'}/>
+                <HeaderButton url={Paths.home} label={'Home'}/>
                 <HeaderButton url={Paths.skins} label={'Skins'}/>
+                <HeaderButton url={Paths.social} label={'Social'}/>
                 <HeaderButton url={Paths.leaderboard} label={'LeaderBoard'}/>
             </div>
 

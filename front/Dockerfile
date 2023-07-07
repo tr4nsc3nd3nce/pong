@@ -9,4 +9,3 @@ RUN npm ci
 COPY --chown=node:node . .
 
 EXPOSE 5173
-

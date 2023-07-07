@@ -15,6 +15,7 @@ import Auth from './Auth';
 import { Paths } from './technical/paths';
 import ProfilePage from './ProfilePage';
 import SettingPage from './SettingPage';
+import SocialPage from './SocialPage';
 
 
 const SomeRoutes = () => {
@@ -27,6 +28,7 @@ const SomeRoutes = () => {
           <Route path={Paths.skins} element={<SkinPage />} />
           <Route path={Paths.profile} element={<ProfilePage />} />
           <Route path={Paths.settings} element={<SettingPage />} />
+          <Route path={Paths.social} element={<SocialPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
