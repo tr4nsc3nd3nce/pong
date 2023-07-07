@@ -2,6 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../technical/paths";
 
+const useOutsideClick = (callback) => {
+  const ref = React.useRef();
+
+  React.useEffect(() => {
+    const handleClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, [ref]);
+
+  return ref;
+};
+
 type Props = {
   image: string //to change for the most appropriate to show the profile image
 }
@@ -12,6 +32,12 @@ const ProfileButton = (props: Props) => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const handleClickOutside = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const ref = useOutsideClick(handleClickOutside);
 
   const navigate = useNavigate();
 
