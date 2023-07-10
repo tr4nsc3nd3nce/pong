@@ -1,26 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../technical/paths";
-
-const useOutsideClick = (callback) => {
-  const ref = React.useRef();
-
-  React.useEffect(() => {
-    const handleClick = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        callback();
-      }
-    };
-
-    document.addEventListener('click', handleClick);
-
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  }, [ref]);
-
-  return ref;
-};
 
 type Props = {
   image: string //to change for the most appropriate to show the profile image
@@ -33,30 +13,39 @@ const ProfileButton = (props: Props) => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleClickOutside = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const ref = useOutsideClick(handleClickOutside);
-
   const navigate = useNavigate();
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const handleOptionClick = (option: string) => {
     if (option == "my_profile"){
-      setMenuOpen(!menuOpen);
+      setMenuOpen(false);
       navigate(Paths.profile);
     }
     else if (option == "settings"){
-      setMenuOpen(!menuOpen);
+      setMenuOpen(false);
       navigate(Paths.settings);
     }
 
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
+      setMenuOpen(false);
+    }
+  };
+ 
+   useEffect(() => {
+     document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+     };
+   }, []);
   
   // ### TO CHANGE WITH USER'S PROFILE IMAGE ### //
   return (
     <div className="px-4 py-2 text-white">
-      <button onClick={toggleMenu} className="flex items-center">
+      <button ref={buttonRef} onClick={toggleMenu} className="flex items-center">
        Profile 
         <img src="https://cdn.discordapp.com/attachments/699371045613993998/699383576243994715/8.jpg"
             alt="ProfileImage" width={40} height={40} className="ml-1.5" />

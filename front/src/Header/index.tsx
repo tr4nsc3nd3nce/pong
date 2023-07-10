@@ -17,7 +17,7 @@ function Header() {
                 <HeaderButton url={Paths.home} label={'Home'}/>
                 <HeaderButton url={Paths.skins} label={'Skins'}/>
                 <HeaderButton url={Paths.social} label={'Social'}/>
-                <HeaderButton url={Paths.leaderboard} label={'LeaderBoard'}/>
+                <HeaderButton url={Paths.leaderboard} label={'LeaderBoards'}/>
             </div>
 
             <div className="flex items-center space-x-4">
