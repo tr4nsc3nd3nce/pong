@@ -37,9 +37,9 @@ const SomeRoutes = () => {
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+
     <Auth>
       <SomeRoutes />
     </Auth>
-  </React.StrictMode>,
-)
+
+);

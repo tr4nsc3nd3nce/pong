@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Paths } from "../technical/paths";
+import { Paths } from "../../../technical/paths";
 
 type Props = {
-  image: string //to change for the most appropriate to show the profile image
+  image: string //to change for the most appropriate to show the profile image?
 }
 
 const ProfileButton = (props: Props) => {

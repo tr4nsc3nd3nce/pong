@@ -1,10 +1,8 @@
 import { useCookies } from 'react-cookie';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React from 'react';
 
 
-import LoginPage from './Login_page'
-import Home from './ui/templates/Home';
+import LoginPage from './LoginPage'
 
 type Props = {
     children?: React.ReactNode

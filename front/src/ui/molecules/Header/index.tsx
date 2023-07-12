@@ -1,8 +1,8 @@
 import React from 'react';
 
-import HeaderButton from '../ui/atoms/HeaderButton';
+import HeaderButton from '../../atoms/HeaderButton';
 import ProfileButton from './ProfileButton';
-import { Paths } from '../technical/paths';
+import { Paths } from '../../../technical/paths';
 import { useNavigate } from 'react-router-dom';
 
 function Header() {

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
+import Header from '../molecules/Header';
 
-import Header from '../../Header';
+
 
 function Home() {
   return (

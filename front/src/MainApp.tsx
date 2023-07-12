@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import React from 'react';
 
 
-import LoginPage from './Login_page'
+import LoginPage from './LoginPage'
 import Home from './ui/templates/Home';
 
 
-function Main_app() {
+function MainApp() {
 
     //requete back to check les cookies//
    /* const response = {
@@ -31,4 +31,4 @@ function Main_app() {
   );
 }
 
-export default Main_app
+export default MainApp
