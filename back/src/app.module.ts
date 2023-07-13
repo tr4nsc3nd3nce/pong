@@ -11,6 +11,8 @@ import { FriendService } from './prisma/friend.service';
 import { FriendController } from './prisma/friend.controller';
 import { MessageController } from './prisma/message.controller';
 import { MessageService } from './prisma/message.service';
+import { ChannelController } from './prisma/channel.controller';
+import { ChannelService } from './prisma/channel.service';
 
 @Module({
   imports: [
@@ -22,8 +24,8 @@ import { MessageService } from './prisma/message.service';
       port: process.env.REDIS_PORT,
     }),
   ],
-  controllers: [AppController, UserController, FriendController, MessageController],
-  providers: [AppService, PrismaService, UserService, FriendService, MessageService],
+  controllers: [AppController, UserController, FriendController, MessageController, ChannelController],
+  providers: [AppService, PrismaService, UserService, FriendService, MessageService, ChannelService],
 })
 export class AppModule {}
 

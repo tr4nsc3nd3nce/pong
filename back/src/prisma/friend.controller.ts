@@ -1,25 +1,19 @@
 import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { Friends } from '@prisma/client';
+import { Friendship } from '@prisma/client';
 import { FriendService } from './friend.service';
 
 class CreateFriendDto {
   @ApiProperty()
-  id: number;
-
-  @ApiProperty()
-  user_1: number;
+  user_1_id: number;
 
   @ApiProperty()
   user_2: number;
 
   @ApiProperty()
-  status: string;
-
-  @ApiProperty()
   created_at: Date;
-
 }
+
 
 @ApiTags('friends')
 @Controller('friends')
@@ -30,17 +24,17 @@ export class FriendController {
   @ApiBody({ type: CreateFriendDto })
   async createFriend(
     @Body() createFriendDto: CreateFriendDto,
-  ): Promise<Friends> {
-    return this.friendService.createFriend(createFriendDto.id, createFriendDto.user_1, createFriendDto.user_2, createFriendDto.status, createFriendDto.created_at);
+  ): Promise<Friendship> {
+    return this.friendService.createFriend(createFriendDto.user_1_id, createFriendDto.user_2, createFriendDto.created_at);
   }
 
   @Get()
-  async getAllUsers(): Promise<Friends[]> {
+  async getAllFriends(): Promise<Friendship[]> {
     return this.friendService.getAllFriends();
   }
 
   @Get('id/:id')
-  async getUserById(@Param('id') id: string): Promise<Friends | null> {
+  async getFriendById(@Param('id') id: string): Promise<Friendship | null> {
     return this.friendService.getFriendById(Number(id));
   }
 }

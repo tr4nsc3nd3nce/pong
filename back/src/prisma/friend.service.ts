@@ -1,43 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Friends } from '@prisma/client';
+import { Friendship } from '@prisma/client';
 
 @Injectable()
 export class FriendService {
   constructor(private prisma: PrismaService) {}
 
-  async createFriend(id: number, user_1: number, user_2: number, status: string, created_at: Date): Promise<Friends> {
-    return this.prisma.friends.create({
+  async createFriend(user_1_id: number, user_2_id: number, created_at: Date): Promise<Friendship> {
+    return this.prisma.friendship.create({
       data: {
-        id,
-        user_1,
-        user_2,
-        status,
+        user_1: {
+          connect: { id: user_1_id },
+        },
+        user_2: user_2_id,
         created_at,
       },
     });
   }
 
-  async getAllFriends(): Promise<Friends[]> {
-    return this.prisma.friends.findMany();
-  }
-
-  async getFriendById(id: number): Promise<Friends | null> {
-    return this.prisma.friends.findUnique({
-      where: {
-        id: id,
-      },
+  async getAllFriends(): Promise<Friendship[]> {
+    return this.prisma.friendship.findMany({
     });
   }
 
-  async updateFriendStatus(id: number, status: string): Promise<Friends> {
-    return this.prisma.friends.update({
+  async getFriendById(id: number): Promise<Friendship | null> {
+    return this.prisma.friendship.findUnique({
       where: {
         id: id,
-      },
-      data: {
-        status,
-      },
+      }
     });
   }
 }
+

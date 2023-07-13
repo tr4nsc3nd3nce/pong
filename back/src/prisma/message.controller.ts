@@ -9,6 +9,9 @@ class CreateMessageDto {
   user: number;
 
   @ApiProperty()
+  recv_id: number;
+
+  @ApiProperty()
   channel: number;
 
   @ApiProperty()
@@ -26,7 +29,7 @@ export class MessageController {
   async createMessage(
     @Body() createMessageDto: CreateMessageDto,
   ): Promise<Message> {
-    return this.messageService.createMessage(createMessageDto.user, createMessageDto.channel, createMessageDto.text);
+    return this.messageService.createMessage(createMessageDto.user, createMessageDto.recv_id, createMessageDto.channel, createMessageDto.text);
   }
 
   @Get()

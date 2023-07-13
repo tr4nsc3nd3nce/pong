@@ -1,9 +1,15 @@
-import { Friend } from '@prisma/client';
+import { Friendship } from '@prisma/client';
 import { FriendService } from './friend.service';
+declare class CreateFriendDto {
+    user_1_id: number;
+    user_2: number;
+    created_at: Date;
+}
 export declare class FriendController {
     private friendService;
     constructor(friendService: FriendService);
-    createFriend(id: number, user_1: string, user_2: string, status: string, created_at: string): Promise<Friend>;
-    getAllUsers(): Promise<Friend[]>;
-    getUserById(id: string): Promise<Friend | null>;
+    createFriend(createFriendDto: CreateFriendDto): Promise<Friendship>;
+    getAllFriends(): Promise<Friendship[]>;
+    getFriendById(id: string): Promise<Friendship | null>;
 }
+export {};

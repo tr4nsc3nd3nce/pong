@@ -16,25 +16,25 @@ let FriendService = class FriendService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createFriend(id, user_1, user_2, status, created_at) {
-        return this.prisma.friend.create({
+    async createFriend(user_1_id, user_2_id, created_at) {
+        return this.prisma.friendship.create({
             data: {
-                id,
-                user_1,
-                user_2,
-                status,
+                user_1: {
+                    connect: { id: user_1_id },
+                },
+                user_2: user_2_id,
                 created_at,
             },
         });
     }
     async getAllFriends() {
-        return this.prisma.friend.findMany();
+        return this.prisma.friendship.findMany({});
     }
     async getFriendById(id) {
-        return this.prisma.friend.findUnique({
+        return this.prisma.friendship.findUnique({
             where: {
                 id: id,
-            },
+            }
         });
     }
 };
