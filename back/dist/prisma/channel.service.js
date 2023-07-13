@@ -56,6 +56,20 @@ let ChannelService = class ChannelService {
             }
         });
     }
+    async blockUserFromChannel(id, user) {
+        const channel = await this.prisma.channel.update({
+            where: { id: id },
+            data: {
+                blocked: {
+                    connect: { id: user }
+                },
+            },
+        });
+        if (!channel) {
+            throw new Error('Channel not found');
+        }
+        return channel;
+    }
 };
 ChannelService = __decorate([
     (0, common_1.Injectable)(),

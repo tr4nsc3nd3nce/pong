@@ -11,67 +11,65 @@ model User {
   secretO2FA          String?
   avatar              String
   xp                  Int
-  friendship          Friendship[] @relation("user_friend")
-  blocked             Blocked[] @relation("user_blocked")
-  match               Match[] @relation("user_match")
-  message             Message[] @relation("user_message")
-  channel_creator     Channel[] @relation("channel_creator")
-  channel_admin       Channel[] @relation("channel_admin")
-  channel_user        Channel[] @relation("channel_user")
-  channel_blocked     Channel[] @relation("channel_blocked")
+  userMatches       UserMatch[]
+  friendsInitiated  Friendship[]  @relation("friendshipInitiator")
+  friendsAccepted   Friendship[]  @relation("friendshipAcceptor")
+  channels          UserChannel[]  // This represents all channels a user is a part of
+  createdChannels   Channel[]      // Channels that the user has created
+  messages          Message[]
 }
 
-model Friendship {
-  id          Int     @id @unique @default(autoincrement())
-  user_1      User    @relation("user_friend", fields: [user_1_id], references: [id])
-  user_1_id   Int
-  user_2      Int
-  accepted    Boolean @default(false)
-  created_at  DateTime
-}
-
-model Message {
-  id            Int       @id @default(autoincrement())
-  user          User      @relation("user_message", fields: [userId], references: [id])
-  userId        Int
-  recv_id       Int?
-  channel       Channel?  @relation(fields: [channelId], references: [id])
-  channelId     Int?
-  text          String
-  created_at    DateTime  @default(now())
-}
-
-model Blocked {
-  id          Int     @id @unique
-  user_1      User    @relation("user_blocked", fields: [user_1_id], references: [id])
-  user_1_id   Int
-  user_2      Int
-  created_at  DateTime
+model UserMatch {
+  id           Int    @id @default(autoincrement())
+  userId    Int
+  matchId  Int
+  score      Int
+  user        User   @relation(fields: [userId], references: [id])
+  match     Match  @relation(fields: [matchId], references: [id])
 }
 
 model Match {
-  id            Int     @id @default(autoincrement())
-  user_1        User    @relation("user_match", fields: [user_1_id], references: [id])
-  user_1_id     Int
-  user_2        Int
-  user_1_score  Int
-  user_2_score  Int
-  created_at    DateTime
+  id                   Int          @id @default(autoincrement())
+  userMatches UserMatch[]
 }
 
+model Friendship {
+  id                Int    @id @default(autoincrement())
+  state           int [PENDING, ACCEPTED, BLOCKED]
+  userList        User[]
+  initiator        User
+  initiatorId      Int
+  acceptorId       Int
+  initiator        User   @relation("friendshipInitiator", fields: [initiatorId], references: [id])
+  acceptor         User   @relation("friendshipAcceptor", fields: [acceptorId], references: [id])
+}
 
 model Channel {
-  id            Int       @id @default(autoincrement())
-  creator       User      @relation("channel_creator", fields: [creatorId], references: [id])
-  creatorId     Int
-  admins        User[]    @relation("channel_admin")
-  blocked       User[]    @relation("channel_blocked")
-  users         User[]    @relation("channel_user")
-  name          String
-  password      String?
-  privated      Boolean   @default(false)
-  messages      Message[]
-  created_at    DateTime
+  id          Int           @id @default(autoincrement())
+  creatorId   Int
+  creator     User          @relation(fields: [creatorId], references: [id])
+  users       UserChannel[] 
+  messages    Message[]
+}
+
+model UserChannel {
+  userId    Int
+  channelId Int
+  isAdmin   Boolean
+  isBlocked Boolean  
+  user      User     @relation(fields: [userId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id])
+
+  @@id([userId, channelId])
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  userId    Int
+  channelId Int
+  user      User     @relation(fields: [userId], references: [id])
+  channel   Channel  @relation(fields: [channelId], references: [id])
 }
 
 datasource db {

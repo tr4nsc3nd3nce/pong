@@ -8,4 +8,5 @@ export declare class ChannelService {
     getChannelById(id: number): Promise<Channel | null>;
     getChannelByUser(creatorId: number): Promise<Channel[]>;
     getChannelMessages(id: number): Promise<Channel[]>;
+    blockUserFromChannel(id: number, user: number): Promise<Channel>;
 }

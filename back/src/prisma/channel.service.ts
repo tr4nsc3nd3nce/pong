@@ -51,4 +51,23 @@ export class ChannelService {
         }
     });
   }
+
+  async blockUserFromChannel(id: number, user: number): Promise<Channel> {
+    const channel = await this.prisma.channel.update({
+      where: { id: id },
+      data: {
+        blocked: {
+          connect: { id: user }
+        },
+      },
+    });
+  
+    if (!channel) {
+      throw new Error('Channel not found');
+    }
+  
+    return channel;
+  }
+  
+  
 }
